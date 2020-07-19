@@ -26,6 +26,7 @@ class Dom {
     this.$el.removeEventListener(eventType, callback)
   }
 
+  // вставляет в документ елемент
   append(node) {
     if (node instanceof Dom) {
       node = node.$el
@@ -39,7 +40,37 @@ class Dom {
 
     return this
   }
+
+  get data() {
+    return this.$el.dataset
+  }
+
+  closest(selector) {
+    return $(this.$el.closest(selector))
+  }
+
+  // метод возвращает координаты елемента
+  getCoords() {
+    return this.$el.getBoundingClientRect()
+  }
+
+  // получение всех дом-елементов с указанным селектором
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
+
+  // метот установки стилей елементу
+  css(styles = {}) {
+  // Метод Object.keys() возвращает массив из собственных перечисляемых свойств
+  // переданного объекта
+    Object
+        .keys(styles)
+        .forEach(key => {
+          this.$el.style[key] = styles[key]
+        })
+  }
 }
+
 
 export function $(selector) {
   return new Dom(selector)
