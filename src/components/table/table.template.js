@@ -3,10 +3,15 @@ const CODES = {
   Z: 90
 }
 
-function toCell(_, col) {
-  return `
-    <div class="cell" contenteditable data-col="${col}"></div>
-  `
+function toCell(row) {
+  return function(_, col) {
+    return `
+      <div class="cell" contenteditable
+      data-type="cell" 
+      data-col="${col}" 
+      data-id="${row}:${col}"></div> 
+    `
+  }
 }
 
 // принимает параметр col и вставляет его в html разметку
@@ -55,15 +60,15 @@ export function createTable(rowsCount = 15) {
   rows.push(createRow(null, cols))
 
   // с помощу цыкла сгенерировали htmlразметку строк
-  for (let i = 0; i < rowsCount; i++) {
+  for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(colsCount)
         .fill(' ')
-        .map(toCell)
+        .map(toCell(row))
         .join('')
 
     // Метод push() добавляет один или более элементов в
     // конец массива и возвращает новую длину массива.
-    rows.push(createRow(i + 1, cells))
+    rows.push(createRow(row + 1, cells))
   }
   // Метод join() объединяет все элементы массива (или
   // массивоподобного объекта) в строку.
