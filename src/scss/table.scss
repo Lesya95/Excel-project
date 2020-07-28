@@ -62,6 +62,7 @@
       border: none;
       outline: 2px solid $primary-color;
       z-index: 2;
+      background-color: #c0ff000a;
     }
   }
 
@@ -70,7 +71,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: #06a891ab;;
+    background-color: $primary-color;
     opacity: 0; 
     z-index: 1000;
     &:hover{

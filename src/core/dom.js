@@ -13,6 +13,20 @@ class Dom {
     return this.$el.outerHTML.trim()
   }
 
+  text(text) {
+    // если text - строка то метод работает как сетер(устанавл контекст елем) 
+    if (typeof text === 'string') {
+      this.$el.textContent = text
+      return this
+    }
+    // если <input> то получаем значение инпута. геттер
+    if (this.$el.tagName.toLowerCase() === 'input') {
+      // Метод trim() удаляет пробельные символы с начала и конца строки
+      return this.$el.value.trim()
+    }
+    // иначе получаем контекст елемента. геттер
+    return this.$el.textContent.trim()
+  }
   clear() {
     this.html('')
     return this
@@ -24,6 +38,11 @@ class Dom {
   // удаление события
   off(eventType, callback) {
     this.$el.removeEventListener(eventType, callback)
+  }
+
+  // метод который ищет один елемент в дом-дереве
+  find(selector) {
+    return $(this.$el.querySelector(selector))
   }
 
   // вставляет в документ елемент
@@ -68,6 +87,36 @@ class Dom {
         .forEach(key => {
           this.$el.style[key] = styles[key]
         })
+  }
+
+  /* если не передать parse то метод возвращает значение атрибута data-id
+  но если его передать то вернет обьект с id строчек и колонок*/
+  id(parse) {
+    if (parse) {
+      const parsed= this.id().split(':')
+      return {
+        row: +parsed[0],
+        col: +parsed[1]
+      }
+    }
+    return this.data.id
+  }
+  
+  focus() {
+    this.$el.focus()
+    return this
+  }
+
+  // метод добавляет класс елементу
+  addClass(className) {
+    this.$el.classList.add(className)
+    return this
+  }
+
+  // метод удаляет класс у елементу
+  removeClass(className) {
+    this.$el.classList.remove(className)
+    return this
   }
 }
 
